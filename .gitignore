@@ -3,6 +3,8 @@
 *.iml
 *.iws
 *.xml
+*.xml
+*.gitignore
 
 # Ignorar los archivos y directorios de compilación de Java
 target/

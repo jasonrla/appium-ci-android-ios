@@ -2,9 +2,9 @@ name: Appium Android
 
 on:
   push:
-    branches: [ javaclient8_2 ]
+    branches: [ master ]
   pull_request:
-    branches: [ javaclient8_2 ]
+    branches: [ master ]
 
 jobs:
   build-and-test:
