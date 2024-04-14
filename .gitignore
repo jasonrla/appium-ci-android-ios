@@ -9,6 +9,7 @@
 # Ignorar los archivos y directorios de compilación de Java
 /target/
 /allure-reports/
+/allure-results/
 *.class
 
 # Ignorar los archivos de registro
