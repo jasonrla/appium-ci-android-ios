@@ -20,16 +20,19 @@ public class TestBase {
         } else if (platform.equalsIgnoreCase("android")) {
             Android_setUp();
         } else {
-            throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
+            iOS_setUp();
+            //throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
         }
     }
 
     public static void Android_setUp() throws MalformedURLException {
 
         String apiLevel = System.getProperty("api.level");
+        if (apiLevel == null) { apiLevel = "34";}
         System.out.printf("API Level: %s\n", apiLevel);
 
         String appiumPort = System.getProperty("appiumPort");
+        if (appiumPort == null) { appiumPort = "4723"; }
         System.out.printf("Appium port: %s\n", appiumPort);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -53,9 +56,11 @@ public class TestBase {
     public static void iOS_setUp() throws MalformedURLException {
 
         String deviceName = System.getProperty("device.name");
+        if (deviceName == null) { deviceName = "iPhone 15";}
         System.out.printf("Device name: %s\n", deviceName);
 
         String appiumPort = System.getProperty("appium.port");
+        if (appiumPort == null) { appiumPort = "4723"; }
         System.out.printf("Appium port: %s\n", appiumPort);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -63,7 +68,7 @@ public class TestBase {
         capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("automationName","XCUITest");
         capabilities.setCapability("isHeadless",true);
-        capabilities.setCapability("wdaLaunchTimeout", 120000);
+        capabilities.setCapability("wdaLaunchTimeout", 180000);
         capabilities.setCapability("app",
                 System.getProperty("user.dir") + "/apps/DailyCheck.zip");
         driver = new IOSDriver(new URL("http://localhost:"+appiumPort+"/"), capabilities);
