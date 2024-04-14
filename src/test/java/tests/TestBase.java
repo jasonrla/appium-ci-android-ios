@@ -11,7 +11,18 @@ import java.net.URL;
 public class TestBase {
 
     public static AppiumDriver driver;
-    //public static BaseDriver driver;
+
+    public void setup() throws MalformedURLException {
+        String platform = System.getProperty("platform", "unknown");
+
+        if (platform.equalsIgnoreCase("ios")) {
+            iOS_setUp();
+        } else if (platform.equalsIgnoreCase("android")) {
+            Android_setUp();
+        } else {
+            throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
+        }
+    }
 
     public static void Android_setUp() throws MalformedURLException {
 
@@ -23,21 +34,19 @@ public class TestBase {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("platformVersion", getPlatformVersionFromApiLevel(apiLevel)); //28:9 , 29:10 en CI
+        capabilities.setCapability("platformVersion", getPlatformVersion(apiLevel));
         capabilities.setCapability("deviceName", "Android Emulator");
         capabilities.setCapability("automationName", "uiautomator2");
         if(Integer.valueOf(apiLevel)<30){
-            capabilities.setCapability("unicodeKeyboard", true); // Deshabilita el teclado Unicode
+            capabilities.setCapability("unicodeKeyboard", true);
             capabilities.setCapability("resetKeyboard", true);
         }
-        capabilities.setCapability("uiautomator2ServerInstallTimeout", 60000); // Aumentar a 60 segundos
-        capabilities.setCapability("adbExecTimeout", 60000); // Aumentar a 60 segundos
+        capabilities.setCapability("uiautomator2ServerInstallTimeout", 60000);
+        capabilities.setCapability("adbExecTimeout", 60000);
         capabilities.setCapability("app",
                 System.getProperty("user.dir") + "/apps/ToDo.apk");
 
-        driver = new AndroidDriver(new URL("http://localhost:"+appiumPort+"/"), capabilities); //sin wd/hub en local
-        //AndroidDriver androidDriver = new AndroidDriver(new URL("http://localhost:" + appiumPort + "/"), capabilities);
-        //driver = new AndroidBaseDriver(androidDriver);
+        driver = new AndroidDriver(new URL("http://localhost:"+appiumPort+"/"), capabilities);
     }
 
 
@@ -49,26 +58,18 @@ public class TestBase {
         String appiumPort = System.getProperty("appium.port");
         System.out.printf("Appium port: %s\n", appiumPort);
 
-        String wdaPort = System.getProperty("wda.port");
-        System.out.printf("WDA port: %s\n", wdaPort);
-
-        String deviceUUID = System.getProperty("device.uuid");
-        System.out.printf("Device UUID: %s\n", deviceUUID);
-
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
-        //capabilities.setCapability("platformVersion", "16.2");
         capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("automationName","XCUITest");
-        capabilities.setCapability("isHeadless",true); //CI
+        capabilities.setCapability("isHeadless",true);
         capabilities.setCapability("wdaLaunchTimeout", 120000);
         capabilities.setCapability("app",
                 System.getProperty("user.dir") + "/apps/DailyCheck.zip");
         driver = new IOSDriver(new URL("http://localhost:"+appiumPort+"/"), capabilities);
-
     }
 
-    public static String getPlatformVersionFromApiLevel(String apiLevel) {
+    public static String getPlatformVersion(String apiLevel) {
         switch (apiLevel) {
             case "21":
                 return "5.0";
@@ -109,11 +110,5 @@ public class TestBase {
         if (null != driver) {
             driver.quit();
         }
-//        if (driver != null) {
-//            AppiumDriver appiumDriver = driver.getDriver();
-//            if (appiumDriver != null) {
-//                appiumDriver.quit();
-//            }
-//        }
     }
 }

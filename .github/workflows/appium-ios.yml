@@ -77,4 +77,4 @@ jobs:
 
       - name: Run Appium iOS tests
         run: |
-          mvn clean test -PiOS -Ddevice.name="${{ matrix.config.device-name }}" -Dappium.port=${{ matrix.config.appium-port }} -Dwda.port=${{ matrix.config.wda-port }} -Ddevice.uuid=${{ env.DEVICE_UUID }}
+          mvn clean test -PiOS -Ddevice.name="${{ matrix.config.device-name }}" -Dappium.port=${{ matrix.config.appium-port }}

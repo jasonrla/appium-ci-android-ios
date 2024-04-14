@@ -6,17 +6,16 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import tests.TestBase;
-
 import java.net.MalformedURLException;
 
 public class CreateNewTaskSteps extends TestBase {
     CreateTaskPage createTaskPage;
     TasksListPage tasksListPage;
 
+
     @Given("Click Add new Task")
     public void clickAddNewTask() throws MalformedURLException {
-        //Android_setUp();
-        iOS_setUp();
+        setup();
         tasksListPage = new TasksListPage(driver);
         createTaskPage = new CreateTaskPage(driver);
         tasksListPage.clickAddTaskBtn();
