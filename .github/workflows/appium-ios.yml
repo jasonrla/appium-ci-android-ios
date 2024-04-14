@@ -2,9 +2,9 @@ name: Appium iOS
 
 on:
   push:
-    branches: [ master ]
+    branches: [ report ]
   pull_request:
-    branches: [ master ]
+    branches: [ report ]
 
 jobs:
   build-and-test:
