@@ -1,4 +1,3 @@
-@allure.label.epic:Web
 Feature: Create New Task
   Scenario: The user can add new task
     Given Click Add new Task

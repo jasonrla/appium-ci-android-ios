@@ -11,28 +11,46 @@ import java.net.URL;
 public class TestBase {
 
     public static AppiumDriver driver;
+    private static String apiLevel;
+    private static String iOSAppiumPort;
+    private static String androidAppiumPort;
+    private static String deviceName;
 
-    public void setup() throws MalformedURLException {
+    public static String getEpicLabel() {
+
         String platform = System.getProperty("platform", "unknown");
+        String epicLabel = "";
+
+        if (platform.equalsIgnoreCase("ios")) {
+            epicLabel = "iOS-" + deviceName;
+        } else if (platform.equalsIgnoreCase("android")) {
+            epicLabel = "Android-" + apiLevel;
+        }
+
+        return epicLabel;
+    }
+
+    public static void setup() throws MalformedURLException {
+        String platform = System.getProperty("platform", "android");
 
         if (platform.equalsIgnoreCase("ios")) {
             iOS_setUp();
         } else if (platform.equalsIgnoreCase("android")) {
             Android_setUp();
         } else {
-            throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
+            //throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
         }
     }
 
     public static void Android_setUp() throws MalformedURLException {
 
-        String apiLevel = System.getProperty("api.level");
+        apiLevel = System.getProperty("api.level");
         if (apiLevel == null) { apiLevel = "34";}
         System.out.printf("API Level: %s\n", apiLevel);
 
-        String appiumPort = System.getProperty("appiumPort");
-        if (appiumPort == null) { appiumPort = "4723"; }
-        System.out.printf("Appium port: %s\n", appiumPort);
+        androidAppiumPort = System.getProperty("appiumPort");
+        if (androidAppiumPort == null) { androidAppiumPort = "4723"; }
+        System.out.printf("Appium port: %s\n", androidAppiumPort);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
@@ -48,19 +66,19 @@ public class TestBase {
         capabilities.setCapability("app",
                 System.getProperty("user.dir") + "/apps/ToDo.apk");
 
-        driver = new AndroidDriver(new URL("http://localhost:"+appiumPort+"/"), capabilities);
+        driver = new AndroidDriver(new URL("http://localhost:"+androidAppiumPort+"/"), capabilities);
     }
 
 
     public static void iOS_setUp() throws MalformedURLException {
 
-        String deviceName = System.getProperty("device.name");
+        deviceName = System.getProperty("device.name");
         if (deviceName == null) { deviceName = "iPhone 15";}
         System.out.printf("Device name: %s\n", deviceName);
 
-        String appiumPort = System.getProperty("appium.port");
-        if (appiumPort == null) { appiumPort = "4723"; }
-        System.out.printf("Appium port: %s\n", appiumPort);
+        iOSAppiumPort = System.getProperty("appium.port");
+        if (iOSAppiumPort == null) { iOSAppiumPort = "4723"; }
+        System.out.printf("Appium port: %s\n", iOSAppiumPort);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "iOS");
@@ -70,7 +88,7 @@ public class TestBase {
         capabilities.setCapability("wdaLaunchTimeout", 180000);
         capabilities.setCapability("app",
                 System.getProperty("user.dir") + "/apps/DailyCheck.zip");
-        driver = new IOSDriver(new URL("http://localhost:"+appiumPort+"/"), capabilities);
+        driver = new IOSDriver(new URL("http://localhost:"+iOSAppiumPort+"/"), capabilities);
     }
 
     public static String getPlatformVersion(String apiLevel) {

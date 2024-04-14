@@ -12,7 +12,6 @@ public class CreateNewTaskSteps extends TestBase {
     CreateTaskPage createTaskPage;
     TasksListPage tasksListPage;
 
-
     @Given("Click Add new Task")
     public void clickAddNewTask() throws MalformedURLException {
         setup();
