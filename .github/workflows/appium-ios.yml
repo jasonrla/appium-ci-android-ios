@@ -79,6 +79,14 @@ jobs:
         run: |
           mvn clean test -PiOS -Ddevice.name="${{ matrix.config.device-name }}" -Dappium.port=${{ matrix.config.appium-port }}
 
+  report:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
       - name: Load test report history
         uses: actions/checkout@v3
         if: always()
