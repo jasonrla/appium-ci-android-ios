@@ -20,8 +20,7 @@ public class TestBase {
         } else if (platform.equalsIgnoreCase("android")) {
             Android_setUp();
         } else {
-            iOS_setUp();
-            //throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
+            throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
         }
     }
 
