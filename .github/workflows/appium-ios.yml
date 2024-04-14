@@ -77,7 +77,7 @@ jobs:
 
       - name: Run Appium iOS tests
         run: |
-          mvn clean test -PiOS -Ddevice.name="${{ matrix.config.device-name }}" -Dappium.port=${{ matrix.config.appium-port }} -Dallure.results.directory=build/allure-results-${{ matrix.config.device-name }}-${{ matrix.config.appium-port }}
+          mvn clean test -PiOS -Ddevice.name=${{ matrix.config.device-name }} -Dappium.port=${{ matrix.config.appium-port }} -Dallure.results.directory=build/allure-results-${{ matrix.config.device-name }}-${{ matrix.config.appium-port }}
 
       - name: Upload Allure results
         uses: actions/upload-artifact@v3
@@ -85,6 +85,10 @@ jobs:
         with:
           name: allure-results
           path: build/allure-results-*
+
+      - name: List Allure results
+        run: |
+          ls -al build/allure-results-*
 
   report:
     needs: build-and-test

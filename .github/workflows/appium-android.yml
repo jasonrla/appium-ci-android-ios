@@ -61,6 +61,17 @@ jobs:
             echo "Appium port: ${{ matrix.config.port }}"
             mvn clean test -Pandroid -Dapi.level=${{ matrix.config.api-level }} -DappiumPort=${{ matrix.config.port }} -Dallure.results.directory=build/allure-results-${{ matrix.config.api-level }}-${{ matrix.config.port }}
 
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: allure-results
+          path: build/allure-results-*
+
+      - name: List Allure results
+        run: |
+          ls -al build/allure-results-*
+
   report:
     needs: build-and-test
     runs-on: ubuntu-latest
