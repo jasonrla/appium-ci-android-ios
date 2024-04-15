@@ -1,4 +1,4 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Sun Apr 14 21:10:23 UTC 2024","Sun Apr 14 21:10:43 UTC 2024","20483","","","","","","The user can add new task #2",""
-"passed","Sun Apr 14 21:09:59 UTC 2024","Sun Apr 14 21:10:22 UTC 2024","23694","","","","","","The user can add new task #1",""
-"passed","Sun Apr 14 21:04:12 UTC 2024","Sun Apr 14 21:09:58 UTC 2024","346280","","","","","","The user can add new task",""
+"passed","Mon Apr 15 16:03:21 UTC 2024","Mon Apr 15 16:06:46 UTC 2024","204408","","","","","","The user can add new task",""
+"passed","Mon Apr 15 16:06:57 UTC 2024","Mon Apr 15 16:07:19 UTC 2024","21417","","","","","","The user can add new task #1",""
+"passed","Mon Apr 15 16:07:24 UTC 2024","Mon Apr 15 16:07:41 UTC 2024","17054","","","","","","The user can add new task #2",""
