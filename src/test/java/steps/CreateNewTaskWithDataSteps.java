@@ -21,7 +21,7 @@ public class CreateNewTaskWithDataSteps extends TestBase {
 
     @Given("Click add new Task")
     public void clickAddNewTask() throws MalformedURLException {
-        setup();
+        //setup();
         tasksListPage = new TasksListPage(driver);
         createTaskPage = new CreateTaskPage(driver);
         tasksListPage.clickAddTaskBtn();
@@ -36,6 +36,6 @@ public class CreateNewTaskWithDataSteps extends TestBase {
     @Then("Task Added Successfully")
     public void taskAddedSuccessfully() {
         //driver.hideKeyboard();
-        tearDown();
+        //tearDown();
     }
 }

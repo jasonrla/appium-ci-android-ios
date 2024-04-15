@@ -2,6 +2,7 @@ package steps;
 
 import PageObjects.CreateTaskPage;
 import PageObjects.TasksListPage;
+import hooks.Hooks;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,7 +15,7 @@ public class CreateNewTaskSteps extends TestBase {
 
     @Given("Click Add new Task")
     public void clickAddNewTask() throws MalformedURLException {
-        setup();
+        //setup();
         tasksListPage = new TasksListPage(driver);
         createTaskPage = new CreateTaskPage(driver);
         tasksListPage.clickAddTaskBtn();
@@ -38,6 +39,6 @@ public class CreateNewTaskSteps extends TestBase {
     @Then("Task added successfully")
     public void taskAddedSuccessfully() {
         //driver.hideKeyboard();
-        tearDown();
+        //tearDown();
     }
 }

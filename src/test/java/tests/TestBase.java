@@ -15,30 +15,16 @@ public class TestBase {
     private static String iOSAppiumPort;
     private static String androidAppiumPort;
     private static String deviceName;
-
-    public static String getEpicLabel() {
-
-        String platform = System.getProperty("platform", "unknown");
-        String epicLabel = "";
-
-        if (platform.equalsIgnoreCase("ios")) {
-            epicLabel = "iOS-" + deviceName;
-        } else if (platform.equalsIgnoreCase("android")) {
-            epicLabel = "Android-" + apiLevel;
-        }
-
-        return epicLabel;
-    }
-
+    
     public static void setup() throws MalformedURLException {
-        String platform = System.getProperty("platform", "android");
+        String platform = System.getProperty("platform", "unknown");
 
         if (platform.equalsIgnoreCase("ios")) {
             iOS_setUp();
         } else if (platform.equalsIgnoreCase("android")) {
             Android_setUp();
         } else {
-            //throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
+            throw new IllegalStateException("No valid active profile. Must be 'iOS' or 'android'.");
         }
     }
 
