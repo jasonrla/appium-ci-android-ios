@@ -67,3 +67,45 @@ jobs:
         with:
             name: allure-results-${{ matrix.config.api-level }}-${{ matrix.config.port }}
             path: build/allure-results-*
+
+  report:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Download Allure results
+        uses: actions/download-artifact@v3
+        with:
+          path: build/allure-results
+
+      - name: Combine Allure results
+        run: |
+          mkdir -p build/allure-results-combined
+          find build/allure-results -mindepth 2 -type f -print -exec mv {} build/allure-results-combined \;
+
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: build/allure-results-combined
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
