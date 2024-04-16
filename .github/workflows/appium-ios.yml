@@ -13,14 +13,14 @@ jobs:
       matrix:
         config:
           - { device-name: iPhone 14 Pro Max, appium-port: 4723, wda-port: 8101 }
-          - { device-name: iPhone 14 Pro, appium-port: 4723, wda-port: 8102 }
-          - { device-name: iPhone 14 Plus , appium-port: 4723, wda-port: 8103 }
-          - { device-name: iPhone 14 , appium-port: 4723, wda-port: 8104 }
-          - { device-name: iPhone 13 Pro Max, appium-port: 4723, wda-port: 8105 }
-          - { device-name: iPhone 13 Pro, appium-port: 4723, wda-port: 8106 }
-          - { device-name: iPhone 12 mini, appium-port: 4723, wda-port: 8107 }
-          - { device-name: iPhone 11 Pro, appium-port: 4723, wda-port: 8108 }
-          - { device-name: iPhone 8, appium-port: 4723, wda-port: 8109 }
+          - { device-name: iPhone 14 Pro, appium-port: 4724, wda-port: 8102 }
+          - { device-name: iPhone 14 Plus , appium-port: 4725, wda-port: 8103 }
+          - { device-name: iPhone 14 , appium-port: 4726, wda-port: 8104 }
+          - { device-name: iPhone 13 Pro Max, appium-port: 4727, wda-port: 8105 }
+          - { device-name: iPhone 13 Pro, appium-port: 4728, wda-port: 8106 }
+          - { device-name: iPhone 12 mini, appium-port: 4729, wda-port: 8107 }
+          - { device-name: iPhone 11 Pro, appium-port: 4730, wda-port: 8108 }
+          - { device-name: iPhone 8, appium-port: 4731, wda-port: 8109 }
       fail-fast: false
 
     steps:
