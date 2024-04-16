@@ -1,0 +1,127 @@
+name: Appium iOS
+
+on:
+  push:
+    branches-ignore: [master]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        config:
+          - { device-name: iPhone 14 Pro Max, appium-port: 4723, wda-port: 8101 }
+          - { device-name: iPhone 14 Pro, appium-port: 4724, wda-port: 8102 }
+          - { device-name: iPhone 14 Plus , appium-port: 4725, wda-port: 8103 }
+          - { device-name: iPhone 14 , appium-port: 4726, wda-port: 8104 }
+          - { device-name: iPhone 13 Pro Max, appium-port: 4727, wda-port: 8105 }
+          - { device-name: iPhone 13 Pro, appium-port: 4728, wda-port: 8106 }
+          - { device-name: iPhone 12 mini, appium-port: 4729, wda-port: 8107 }
+          - { device-name: iPhone 11 Pro, appium-port: 4730, wda-port: 8108 }
+          - { device-name: iPhone 8, appium-port: 4731, wda-port: 8109 }
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Setup Java
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Check Xcode version
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices
+
+      - name: Start iOS Simulator
+        run: |
+          xcrun simctl boot "${{ matrix.config.device-name }}"
+          xcrun simctl list | grep Booted
+
+      - name: Get Booted Simulator UDID
+        run: |
+          DEVICE_UUID=$(xcrun simctl list devices | grep -i booted | grep -i "${{ matrix.config.device-name }}" | awk -F '[()]+' '{print $2}')
+          echo "DEVICE_UUID=$DEVICE_UUID" >> $GITHUB_ENV
+
+      - name: Setup Appium
+        run: |
+          npm install -g appium@v2.0.1
+          appium driver install xcuitest@7.11.3
+          appium -v
+          appium -p ${{ matrix.config.appium-port }} &>/dev/null &
+
+      - name: Run Appium iOS tests
+        run: |
+          device_name="${{ matrix.config.device-name }}"
+          device_name_2=${device_name// /_}
+          mvn clean test -PiOS -Ddevice.name="${device_name}" -Dappium.port=${{ matrix.config.appium-port }} -Dallure.results.directory=build/allure-results-${device_name_2}-${{ matrix.config.appium-port }}
+
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+            name: allure-results-${{ matrix.config.device-name }}-${{ matrix.config.appium-port }}
+            path: build/allure-results-*
+
+  report:
+    needs: build-and-test
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Download Allure results
+        uses: actions/download-artifact@v3
+        with:
+          path: build/allure-results
+
+      - name: Combine Allure results
+        run: |
+          mkdir -p build/allure-results-combined
+          find build/allure-results -mindepth 2 -type f -print -exec mv {} build/allure-results-combined \;
+
+      - name: Generate Allure report
+        run: |
+          brew install allure
+          allure generate build/allure-results-combined -o allure-report
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: allure-report
+          path: allure-report
+
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-report
