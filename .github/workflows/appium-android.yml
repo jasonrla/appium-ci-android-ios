@@ -2,9 +2,9 @@ name: Appium Android
 
 on:
   push:
-    branches: [ master ]
+    branches: [ feature1 ]
   pull_request:
-    branches: [ master ]
+    branches: [ feature1 ]
 
 jobs:
   build-and-test:

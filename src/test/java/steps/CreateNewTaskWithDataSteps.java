@@ -1,6 +1,6 @@
 package steps;
 
-import PageObjects.CreateTaskPage;
+import PageObjects.CreateNewTaskPage;
 import PageObjects.TasksListPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,29 +8,25 @@ import tests.TestBase;
 
 import java.net.MalformedURLException;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import java.io.FileReader;
-import java.io.IOException;
-
 public class CreateNewTaskWithDataSteps extends TestBase {
 
-    CreateTaskPage createTaskPage;
+    CreateNewTaskPage createNewTaskPage;
     TasksListPage tasksListPage;
+
+    public CreateNewTaskWithDataSteps() {
+        tasksListPage = new TasksListPage(driver);
+        createNewTaskPage = new CreateNewTaskPage(driver);
+    }
 
     @Given("Click add new Task")
     public void clickAddNewTask() throws MalformedURLException {
-        //setup();
-        tasksListPage = new TasksListPage(driver);
-        createTaskPage = new CreateTaskPage(driver);
         tasksListPage.clickAddTaskBtn();
     }
 
     @Given("Enter {string} and {string}")
     public void enterAnd(String taskName, String taskDesc) {
-        createTaskPage.enterTaskName(taskName);
-        createTaskPage.enterTaskDesc(taskDesc);
+        createNewTaskPage.enterTitle(taskName);
+        createNewTaskPage.enterTaskDescription(taskDesc);
     }
 
     @Then("Task Added Successfully")

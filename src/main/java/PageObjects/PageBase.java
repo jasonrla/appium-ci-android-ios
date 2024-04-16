@@ -14,7 +14,6 @@ public class PageBase {
     AppiumDriver driver;
     public static final Duration WAIT = Duration.ofSeconds(10);
 
-
     public PageBase(AppiumDriver appiumDriver) {
         PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
         driver = appiumDriver;
@@ -43,6 +42,11 @@ public class PageBase {
     public String getAttribute(WebElement element, String attribute) {
         waitForVisibility(element);
         return element.getAttribute(attribute);
+    }
+
+    public boolean isElementDisplayed(WebElement element) {
+        waitForVisibility(element);
+        return element.isDisplayed();
     }
 
 }

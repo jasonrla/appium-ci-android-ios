@@ -15,7 +15,7 @@ public class TestBase {
     private static String iOSAppiumPort;
     private static String androidAppiumPort;
     private static String deviceName;
-    
+
     public static void setup() throws MalformedURLException {
         String platform = System.getProperty("platform", "unknown");
 
