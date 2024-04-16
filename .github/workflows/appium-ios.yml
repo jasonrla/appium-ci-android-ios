@@ -85,12 +85,8 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: allure-results
-          path: build/allure-results-*
-
-      - name: List Allure results
-        run: |
-          ls -al build/allure-results-*
+            name: allure-results-${{ matrix.config.device-name }}-${{ matrix.config.appium-port }}
+            path: build/allure-results-*
 
   report:
     needs: build-and-test
@@ -99,6 +95,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
+        with:
+          ref: gh-pages
+
+      - name: Setup time data
+        run: echo "DATE=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
 
       - name: Download Allure results
         uses: actions/download-artifact@v3
@@ -106,27 +107,15 @@ jobs:
           name: allure-results
           path: build/allure-results
 
-      - name: Combine Allure results
-        run: |
-          mkdir -p build/allure-results-combined
-          find build/allure-results -mindepth 2 -type f -print -exec mv {} build/allure-results-combined \;
-
       - name: Generate Allure report
         run: |
-          brew install allure
-          allure generate build/allure-results-combined -o allure-report
+          mkdir -p allure-report/$DATE
+          allure generate build/allure-results -o allure-report/$DATE
 
-      - name: Upload Allure report
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: allure-report
-          path: allure-report
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-report
+      - name: Commit and Push Report to gh-pages
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add allure-report/$DATE
+          git commit -m "Add allure report for $DATE"
+          git push

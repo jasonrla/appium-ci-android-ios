@@ -65,12 +65,8 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: allure-results
-          path: build/allure-results-*
-
-      - name: List Allure results
-        run: |
-          ls -al build/allure-results-*
+            name: allure-results-${{ matrix.config.api-level }}-${{ matrix.config.port }}
+            path: build/allure-results-*
 
   report:
     needs: build-and-test
@@ -79,14 +75,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-
-      - name: Load test report history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages
+
+      - name: Setup time data
+        run: echo "DATE=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
 
       - name: Download Allure results
         uses: actions/download-artifact@v3
@@ -94,23 +87,15 @@ jobs:
           name: allure-results
           path: build/allure-results
 
-      - name: Combine Allure results
+      - name: Generate Allure report
         run: |
-          mkdir -p build/allure-results-combined
-          find build/allure-results -mindepth 2 -type f -print -exec mv {} build/allure-results-combined \;
+          mkdir -p allure-report/$DATE
+          allure generate build/allure-results -o allure-report/$DATE
 
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: build/allure-results-combined
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+      - name: Commit and Push Report to gh-pages
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add allure-report/$DATE
+          git commit -m "Add allure report for $DATE"
+          git push
