@@ -1,16 +1,10 @@
-package PageObjects;
+package pageObjects.android;
 
 import io.appium.java_client.AppiumDriver;
-
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import io.cucumber.java.en.And;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import utils.UtilFunctions;
 
 public class TasksListPage extends PageBase {
     public TasksListPage(AppiumDriver appiumDriver) {
@@ -20,12 +14,6 @@ public class TasksListPage extends PageBase {
     @AndroidFindBy(id = "fab")
     @iOSXCUITFindBy(accessibility = "plus.circle")
     WebElement addTaskBtn;
-
-    @AndroidFindBy(accessibility = "More options")
-    WebElement moreOptionsBtn;
-
-    @AndroidFindBy(accessibility = "Open navigation drawer")
-    WebElement openNavDrawerBtn;
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Today']")
     WebElement pageText;
@@ -65,56 +53,27 @@ public class TasksListPage extends PageBase {
     }
 
     public boolean isFirstItemDisplayed() {
-        WebElement element = createElement(taskItemElement, "1");
+        WebElement element = UtilFunctions.createElement(driver, taskItemElement, "1");
         return isElementDisplayed(element);
     }
 
-    public WebElement createElement(String elementString, String text) {
-        String xpath = String.format(elementString, text);
-        return driver.findElement(By.xpath(xpath));
-    }
-
     public boolean isTitleCorrect(String titleText) {
-        return getFromTaskItemElement(titleTaskElement, "1").equals(titleText);
-    }
-
-    public String formatDateString(String inputDate, String pattern) {
-        SimpleDateFormat inputFormat;
-        if (inputDate.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
-            inputFormat = new SimpleDateFormat("d/M/yyyy");
-        } else if (inputDate.matches("\\d{1,2}/\\d{1,2}/\\d{2}")) {
-            inputFormat = new SimpleDateFormat("d/M/yy");
-        } else {
-            throw new IllegalArgumentException("Invalid date format");
-        }
-
-        try {
-            Date date = inputFormat.parse(inputDate);
-            SimpleDateFormat outputFormat = new SimpleDateFormat(pattern);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid date", e);
-        }
+        return UtilFunctions.getFromTaskItemElement(driver, titleTaskElement, "1").equals(titleText);
     }
 
     public boolean isStartDateCorrect(String startDateText) {
         String newDate = startDateText;
         if(!startDateText.equals("Today") && !startDateText.equals("Tomorrow") && !startDateText.equals("None")) {
-            newDate = formatDateString(startDateText, "EEE d MMM");
+            newDate = UtilFunctions.formatDateString(startDateText, "EEE d MMM");
         }
 
-        String startDate = getFromTaskItemElement(startDateTaskElement, "1");
+        String startDate = UtilFunctions.getFromTaskItemElement(driver, startDateTaskElement, "1");
         String startDateFormatted = startDate.substring(0, startDate.length() - 2).trim();
         return startDateFormatted.equals(newDate);
     }
 
     public boolean isTagCorrect(String tagText) {
-        return getFromTaskItemElement(tagTaskElement, "1").equals(tagText);
-    }
-
-    public String getFromTaskItemElement(String elementValue, String elementNumber) {
-        WebElement element = createElement(elementValue, elementNumber);
-        return element.getText();
+        return UtilFunctions.getFromTaskItemElement(driver, tagTaskElement, "1").equals(tagText);
     }
 
     public void clickOnNavDrawerButton() {
@@ -122,7 +81,7 @@ public class TasksListPage extends PageBase {
     }
 
     public void clickOnNavOption(String screen) {
-        WebElement element = createElement(navOption, screen);
+        WebElement element = UtilFunctions.createElement(driver, navOption, screen);
         click(element);
     }
 }

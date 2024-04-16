@@ -1,0 +1,147 @@
+{
+  "ValidData": {
+    "data1": {
+      "Feature": "Passport Management",
+      "Scenario": "Renew Passport",
+      "Description": "Renew passport with necessary documents verification.",
+      "data": {
+        "Title": "Passport Renewal",
+        "Start Date": "Today",
+        "Due Date": "None",
+        "Note": "Check necessary documents",
+        "Tag": "Personal",
+        "Priority": "None"
+      }
+    },
+    "data2": {
+      "Feature": "Daily Tasks",
+      "Scenario": "Buying Bread",
+      "Description": "Ensure bread is purchased daily for family needs.",
+      "data": {
+        "Title": "Buy bread",
+        "Start Date": "Today",
+        "Due Date": "Tomorrow",
+        "Note": "for family",
+        "Tag": "To read",
+        "Priority": "Low"
+      }
+    },
+    "data3": {
+      "Feature": "Healthcare Management",
+      "Scenario": "Annual Check-up",
+      "Description": "Perform annual medical check-up to ensure health insurance is up-to-date.",
+      "data": {
+        "Title": "Annual Medical Check-up",
+        "Start Date": "Today",
+        "Due Date": "Today",
+        "Note": "Confirm health insurance details",
+        "Tag": "Work",
+        "Priority": "Medium"
+      }
+    },
+    "data4": {
+      "Feature": "Educational Management",
+      "Scenario": "Course Enrollment",
+      "Description": "Register for a course with a deadline for a discount.",
+      "data": {
+        "Title": "Course Enrollment",
+        "Start Date": "Tomorrow",
+        "Due Date": "None",
+        "Note": "Pay by the 25th for a discount",
+        "Tag": "Shopping",
+        "Priority": "High"
+      }
+    },
+    "data5": {
+      "Feature": "Personal Event",
+      "Scenario": "Relative's Birthday",
+      "Description": "Prepare for a relative's birthday celebration.",
+      "data": {
+        "Title": "Relative's Birthday",
+        "Start Date": "Tomorrow",
+        "Due Date": "Tomorrow",
+        "Note": "Buy a gift and organize a party",
+        "Tag": "Work",
+        "Priority": "None"
+      }
+    },
+    "data6": {
+      "Feature": "Vehicle Maintenance",
+      "Scenario": "Car Maintenance",
+      "Description": "Scheduled car maintenance for oil change and brake check.",
+      "data": {
+        "Title": "Car Maintenance",
+        "Start Date": "Today",
+        "Due Date": "30/04/2024",
+        "Note": "Change oil and check brakes",
+        "Tag": "Shopping",
+        "Priority": "Low"
+      }
+    },
+    "data7": {
+      "Feature": "Healthcare Management",
+      "Scenario": "Dental Appointment",
+      "Description": "Remember to bring payment method for dental services.",
+      "data": {
+        "Title": "Dentist",
+        "Start Date": "Tomorrow",
+        "Due Date": "30/04/2025",
+        "Note": "do not forget credit card",
+        "Tag": "Shopping",
+        "Priority": "Medium"
+      }
+    },
+    "data8": {
+      "Feature": "Financial Management",
+      "Scenario": "Rent Payment",
+      "Description": "Ensure timely payment of rent.",
+      "data": {
+        "Title": "Pay rent",
+        "Start Date": "18/04/2024",
+        "Due Date": "None",
+        "Note": "only one month",
+        "Tag": "To read",
+        "Priority": "High"
+      }
+    },
+    "data9": {
+      "Feature": "Media Subscription Management",
+      "Scenario": "Pay TV Subscription",
+      "Description": "Manage payment for TV services.",
+      "data": {
+        "Title": "Pay tv",
+        "Start Date": "19/07/2026",
+        "Due Date": "None",
+        "Note": "3rd part",
+        "Tag": "Work",
+        "Priority": "Low"
+      }
+    },
+    "data10": {
+      "Feature": "Financial Management",
+      "Scenario": "Tax Filing",
+      "Description": "Complete the annual tax filing by the due date.",
+      "data": {
+        "Title": "Annual Tax Filing",
+        "Start Date": "20/04/2024",
+        "Due Date": "22/06/2024",
+        "Note": "Gather all financial statements and receipts",
+        "Tag": "Shopping",
+        "Priority": "High"
+      }
+    },
+    "data11": {
+      "Feature": "Software Management",
+      "Scenario": "[E2E] Updating Office Software",
+      "Description": "Positive test case demonstrating a successful update of office software, typically referred to as a 'happy path'.",
+      "data": {
+        "Title": "Update Office Software",
+        "Start Date": "25/04/2024",
+        "Due Date": "20/05/2027",
+        "Note": "Ensure backup before update",
+        "Tag": "Work",
+        "Priority": "Medium"
+      }
+    }
+  }
+}

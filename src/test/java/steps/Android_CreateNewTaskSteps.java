@@ -1,7 +1,7 @@
 package steps;
 
-import PageObjects.CreateNewTaskPage;
-import PageObjects.TasksListPage;
+import pageObjects.android.CreateNewTaskPage;
+import pageObjects.android.TasksListPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -10,51 +10,51 @@ import org.junit.Assert;
 import tests.TestBase;
 import java.net.MalformedURLException;
 
-public class CreateNewTaskSteps extends TestBase {
+public class Android_CreateNewTaskSteps extends TestBase {
 
     CreateNewTaskPage createNewTaskPage;
     TasksListPage tasksListPage;
 
-    public CreateNewTaskSteps() {
+    public Android_CreateNewTaskSteps() {
         tasksListPage = new TasksListPage(driver);
         createNewTaskPage = new CreateNewTaskPage(driver);
     }
 
-    @Given("Click Add new Task")
-    public void clickAddNewTask() throws MalformedURLException {
-        tasksListPage.clickAddTaskBtn();
-    }
+//    @Given("Click Add new Task")
+//    public void clickAddNewTask() throws MalformedURLException {
+//        tasksListPage.clickAddTaskBtn();
+//    }
+//
+//    @Given("Enter TaskName")
+//    public void enterTaskName() {
+//        createNewTaskPage.enterTitle("Task 1");
+//    }
+//
+//    @Given("Enter TaskDesc")
+//    public void enterTaskDesc() {
+//        createNewTaskPage.enterTaskDescription("Desc 1");
+//    }
+//
+//    @When("Click Save")
+//    public void clickSave() {
+//        createNewTaskPage.clickSaveBtn();
+//    }
 
-    @Given("Enter TaskName")
-    public void enterTaskName() {
-        createNewTaskPage.enterTitle("Task 1");
-    }
+//    @Then("Task added successfully")
+//    public void taskAddedSuccessfully() {
+//    }
 
-    @Given("Enter TaskDesc")
-    public void enterTaskDesc() {
-        createNewTaskPage.enterTaskDescription("Desc 1");
-    }
+//    @Given("the user is on the {string} screen")
+//    public void theUserIsOnTheScreen(String toolbarText) {
+//        Assert.assertTrue(tasksListPage.isTasksListPageDisplayed());
+//        Assert.assertEquals(tasksListPage.getToolbarTitle(), toolbarText);
+//        System.out.printf("The user is on the %s screen\n", toolbarText);
+//    }
 
-    @When("Click Save")
-    public void clickSave() {
-        createNewTaskPage.clickSaveBtn();
-    }
-
-    @Then("Task added successfully")
-    public void taskAddedSuccessfully() {
-    }
-
-    @Given("the user is on the {string} screen")
-    public void theUserIsOnTheScreen(String toolbarText) {
-        Assert.assertTrue(tasksListPage.isTasksListPageDisplayed());
-        Assert.assertEquals(tasksListPage.getToolbarTitle(), toolbarText);
-        System.out.printf("The user is on the %s screen\n", toolbarText);
-    }
-
-    @When("the user clicks the plus button to add a task")
-    public void theUserClicksThePlusButtonToAddATask() {
-        tasksListPage.clickAddTaskBtn();
-    }
+//    @When("the user clicks the plus button to add a task")
+//    public void theUserClicksThePlusButtonToAddATask() {
+//        tasksListPage.clickAddTaskBtn();
+//    }
 
     @And("enters {string} in the Title field")
     public void entersInTheTitleField(String title) {
@@ -118,10 +118,7 @@ public class CreateNewTaskSteps extends TestBase {
         createNewTaskPage.clickOnOKButton();
     }
 
-    @And("the user clicks on the Save button")
-    public void theUserClicksOnTheSaveButton() {
-        createNewTaskPage.clickOnSaveButton();
-    }
+
 
     @Then("the new task should appear on the correct {string} screen")
     public void theNewTaskShouldAppearOnTheCorrectScreen(String startDate) {
@@ -145,6 +142,13 @@ public class CreateNewTaskSteps extends TestBase {
         Assert.assertTrue(tasksListPage.isStartDateCorrect(startDateText));
         Assert.assertTrue(tasksListPage.isTagCorrect(tagText));
 
+    }
+
+    @Given("the user is on the {string} screen")
+    public void theUserIsOnTheScreen(String toolbarText) {
+        Assert.assertTrue(tasksListPage.isTasksListPageDisplayed());
+        Assert.assertEquals(tasksListPage.getToolbarTitle(), toolbarText);
+        System.out.printf("The user is on the %s screen\n", toolbarText);
     }
 
 }

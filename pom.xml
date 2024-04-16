@@ -138,7 +138,7 @@
                                 <platform>iOS</platform>
                             </systemPropertyVariables>
                             <includes>
-                                <include>**/TestRunner.java</include>
+                                <include>**/runners.IOSTestRunner.java</include>
                             </includes>
                         </configuration>
                     </plugin>
@@ -171,7 +171,7 @@
                                 <platform>android</platform>
                             </systemPropertyVariables>
                             <includes>
-                                <include>**/TestRunner.java</include>
+                                <include>**/runners.AndroidTestRunner.java</include>
                             </includes>
                         </configuration>
                     </plugin>

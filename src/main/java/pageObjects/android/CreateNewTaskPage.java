@@ -1,17 +1,16 @@
-package PageObjects;
+package pageObjects.android;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import utils.UtilFunctions;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class CreateNewTaskPage extends PageBase {
+
     public CreateNewTaskPage(AppiumDriver appiumDriver) {
         super(appiumDriver);
     }
@@ -90,23 +89,16 @@ public class CreateNewTaskPage extends PageBase {
 
     String dayTextElement = "//android.view.View[@content-desc='%s']";
 
-    public WebElement createTagElement(String elementString, String text) {
-        String xpath = String.format(elementString, text);
-        return driver.findElement(By.xpath(xpath));
-    }
 
     public boolean isModalDisplayed(){
         return isElementDisplayed(modalElement);
     }
 
     public void enterTitle(String taskTittle) {
-        System.out.printf("Entering task title: %s\n", taskTittle);
         enterText(titleElement, taskTittle);
     }
 
     public void enterTaskDescription(String descText) {
-
-        System.out.printf("Entering task description: %s\n", descText);
         enterText(descriptionElement, descText);
     }
 
@@ -115,7 +107,7 @@ public class CreateNewTaskPage extends PageBase {
     }
 
     public void selectTag(String text){
-        WebElement element = createTagElement(tagElementOption, text);
+        WebElement element = UtilFunctions.createElement(driver, tagElementOption, text);
         element.click();
     }
 
@@ -146,8 +138,7 @@ public class CreateNewTaskPage extends PageBase {
 
     public String getDateValue(String date){
         if (!date.equals("None") && !date.equals("Today") && !date.equals("Tomorrow")) {
-            System.out.println(formatDateString(date, "EEE d MMM"));
-            return formatDateString(date, "EEE d MMM");
+            return UtilFunctions.formatDateString(date, "EEE d MMM");
         } else {
             return date;
         }
@@ -174,51 +165,14 @@ public class CreateNewTaskPage extends PageBase {
     }
 
     public void selectPriority(String text){
-        WebElement element = createTagElement(priorityElementOption, text);
+        WebElement element = UtilFunctions.createElement(driver, priorityElementOption, text);
         element.click();
     }
 
-    public void clickOnOKButton() {
-        click(okModalBtn);
-
-    }
+    public void clickOnOKButton() { click(okModalBtn); }
 
     public void clickOnSaveButton() {
         click(saveButton);
-    }
-
-    public String formatDateString(String inputDate, String pattern) {
-        SimpleDateFormat inputFormat;
-        if (inputDate.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
-            inputFormat = new SimpleDateFormat("d/M/yyyy");
-        } else if (inputDate.matches("\\d{1,2}/\\d{1,2}/\\d{2}")) {
-            inputFormat = new SimpleDateFormat("d/M/yy");
-        } else {
-            throw new IllegalArgumentException("Invalid date format");
-        }
-
-        try {
-            Date date = inputFormat.parse(inputDate);
-            SimpleDateFormat outputFormat = new SimpleDateFormat(pattern);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid date", e);
-        }
-    }
-
-    public WebElement createElement(String elementString, String text) {
-        String xpath = String.format(elementString, text);
-        return driver.findElement(By.xpath(xpath));
-    }
-
-    public String formatMonthString(String inputMonth) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("MMMM", Locale.ENGLISH);
-            SimpleDateFormat outputFormat = new SimpleDateFormat("MMM", Locale.ENGLISH);
-            return outputFormat.format(inputFormat.parse(inputMonth));
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid month", e);
-        }
     }
 
     public void selectTomorrowDate(){
@@ -230,7 +184,7 @@ public class CreateNewTaskPage extends PageBase {
     }
 
     public void selectDate(String date) {
-        String formattedDate = formatDateString(date, "dd MMMM yyyy"); //04 April 2024
+        String formattedDate = UtilFunctions.formatDateString(date, "dd MMMM yyyy"); //04 April 2024
 
         String[] dateParts = formattedDate.split(" ");
         String month = dateParts[1];
@@ -238,15 +192,15 @@ public class CreateNewTaskPage extends PageBase {
 
         if(!headerYearTextElement.getAttribute("text").equals(year)){
             click(headerYearTextElement);
-            WebElement desiredYear = createTagElement(yearElement, year);
+            WebElement desiredYear = UtilFunctions.createElement(driver, yearElement, year);
             desiredYear.click();
         }
 
-        while (!getAttribute( calendarFirstDayElement, "content-desc").contains(formatMonthString(month))) {
+        while (!getAttribute( calendarFirstDayElement, "content-desc").contains(UtilFunctions.formatMonthString(month))) {
             click(nextMonthButton);
         }
 
-        WebElement element = createElement(dayTextElement, formattedDate);
+        WebElement element = UtilFunctions.createElement(driver, dayTextElement, formattedDate);
         element.click();
     }
 
@@ -256,5 +210,8 @@ public class CreateNewTaskPage extends PageBase {
         String formattedDate = sdf.format(date);
         System.out.printf("Selecting current date: %s\n", formattedDate);
         selectDate(formattedDate);
+    }
+
+    public void enterDueDate() {
     }
 }

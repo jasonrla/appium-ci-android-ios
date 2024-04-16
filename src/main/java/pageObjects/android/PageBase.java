@@ -1,4 +1,4 @@
-package PageObjects;
+package pageObjects.android;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
