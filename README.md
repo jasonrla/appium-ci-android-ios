@@ -6,6 +6,10 @@ This mobile test automation framework is designed to support automated testing f
 Profiles are used to define the different OS for running the tests. The framework is built using Java, Maven, Appium, and Cucumber. It uses the Allure reporting tool to generate detailed test reports.
 It implements the Page Object Model (POM) design pattern, which helps to create a more maintainable and scalable test automation framework. A CI pipeline is also included to run the tests automatically after each code commit, using Strategy Pattern to define the different devices for running the tests.
 
+Video demo:
+[Android demo](https://drive.google.com/file/d/1t3SmZq7BpuSiGfn8PgYVa9Klq1hZtXai/view?usp=sharing).
+[IOS demo](https://drive.google.com/file/d/1E-3qkUD5RP64Xd5O2Hy_xnayv4-U-VnE/view?usp=sharing).
+
 ## ToDo App for Android and iOS
 
 The ToDo App is a mobile application that allows users to create, edit, and delete tasks. It is used as a sample application to demonstrate the capabilities of the mobile automation framework.
