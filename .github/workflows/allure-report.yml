@@ -1,8 +1,8 @@
-name: Generate and Publish Allure Report
+name: Allure Report
 
 on:
   workflow_run:
-    workflows: ["appium-android", "appium-ios"]
+    workflows: ["Appium Android", "Appium iOS"]
     types:
       - completed
 
