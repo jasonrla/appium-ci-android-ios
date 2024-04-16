@@ -67,35 +67,3 @@ jobs:
         with:
             name: allure-results-${{ matrix.config.api-level }}-${{ matrix.config.port }}
             path: build/allure-results-*
-
-  report:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.1.1
-        with:
-          ref: gh-pages
-
-      - name: Setup time data
-        run: echo "DATE=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
-
-      - name: Download Allure results
-        uses: actions/download-artifact@v3
-        with:
-          name: allure-results
-          path: build/allure-results
-
-      - name: Generate Allure report
-        run: |
-          mkdir -p allure-report/$DATE
-          allure generate build/allure-results -o allure-report/$DATE
-
-      - name: Commit and Push Report to gh-pages
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add allure-report/$DATE
-          git commit -m "Add allure report for $DATE"
-          git push
