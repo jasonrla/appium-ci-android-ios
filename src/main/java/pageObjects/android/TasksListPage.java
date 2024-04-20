@@ -33,12 +33,32 @@ public class TasksListPage extends PageBase {
     @AndroidFindBy(accessibility = "Open navigation drawer")
     WebElement navDrawerButton;
 
+    @AndroidFindBy(id = "android:id/button2")
+    WebElement noThanksButton;
+
+    @AndroidFindBy(id = "com.jeffprod.todo:id/alertTitle")
+    WebElement alertTitle;
+
     String navOption = "//android.widget.CheckedTextView[@resource-id='com.jeffprod.todo:id/design_menu_item_text' and @text='%s']";
 
     String taskItemElement = "//android.widget.ListView[@resource-id='com.jeffprod.todo:id/lv']/android.widget.RelativeLayout[%s]";
     String titleTaskElement = "(//android.widget.TextView[@resource-id='com.jeffprod.todo:id/textViewListView'])[%s]";
     String startDateTaskElement = "(//android.widget.TextView[@resource-id='com.jeffprod.todo:id/textViewDateStart'])[%s]";
     String tagTaskElement = "(//android.widget.TextView[@resource-id='com.jeffprod.todo:id/textViewTag'])[%s]";
+
+    public boolean isAlertDisplayed() {
+        return isElementDisplayed(alertTitle);
+    }
+
+    public void clickNoThanksButton() {
+        click(noThanksButton);
+    }
+
+    public void handleRateThisAppAlert() {
+        if(isAlertDisplayed()) {
+            clickNoThanksButton();
+        }
+    }
 
     public void clickAddTaskBtn() {
         click(addTaskBtn);

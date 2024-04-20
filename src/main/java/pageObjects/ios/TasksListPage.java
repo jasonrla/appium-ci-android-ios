@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import utils.UtilFunctions;
 
 public class TasksListPage extends PageBase {
+
     public TasksListPage(AppiumDriver appiumDriver) {
         super(appiumDriver);
     }
@@ -37,4 +38,5 @@ public class TasksListPage extends PageBase {
     public boolean isDailyPageOpenned() {
         return isElementDisplayed(dailyCheckPage);
     }
+
 }

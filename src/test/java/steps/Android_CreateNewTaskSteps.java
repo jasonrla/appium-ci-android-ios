@@ -146,6 +146,7 @@ public class Android_CreateNewTaskSteps extends TestBase {
 
     @Given("the user is on the {string} screen")
     public void theUserIsOnTheScreen(String toolbarText) {
+        tasksListPage.handleRateThisAppAlert();
         Assert.assertTrue(tasksListPage.isTasksListPageDisplayed());
         Assert.assertEquals(tasksListPage.getToolbarTitle(), toolbarText);
         System.out.printf("The user is on the %s screen\n", toolbarText);

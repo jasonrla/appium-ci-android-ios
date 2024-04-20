@@ -79,7 +79,7 @@ jobs:
         run: |
           device_name="${{ matrix.config.device-name }}"
           device_name_2=${device_name// /_}
-          mvn clean test -PiOS -Ddevice.name="${device_name}" -Dappium.port=${{ matrix.config.appium-port }} -Dallure.results.directory=build/allure-results-${device_name_2}-${{ matrix.config.appium-port }}
+          mvn clean test -PiOS -Ddevice.name="${device_name}" -Dheadless=true -Dappium.port=${{ matrix.config.appium-port }} -Dallure.results.directory=build/allure-results-${device_name_2}-${{ matrix.config.appium-port }}
 
       - name: Upload Allure results
         uses: actions/upload-artifact@v3

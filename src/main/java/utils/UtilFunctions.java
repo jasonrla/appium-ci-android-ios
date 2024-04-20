@@ -1,13 +1,13 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
+import org.json.JSONObject;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,12 +21,11 @@ public class UtilFunctions {
         this.driver = driver;
     }
 
-    public static JSONObject readJSON(String data) throws IOException, org.json.simple.parser.ParseException {
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader("data/AndroidData.json"));
-        JSONObject jsonObject = (JSONObject) obj;
-        JSONObject validData = (JSONObject) jsonObject.get("ValidData");
-        return (JSONObject) validData.get(data);
+    public static JSONObject readJSON(String data) throws IOException {
+        String content = new String(Files.readAllBytes(Paths.get("data/AndroidData.json")));
+        JSONObject jsonObject = new JSONObject(content);
+        JSONObject validData = jsonObject.getJSONObject("ValidData");
+        return validData.getJSONObject(data);
     }
 
     public static WebElement createElement(AppiumDriver driver, String elementString, String text) {

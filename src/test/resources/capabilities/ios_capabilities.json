@@ -1,0 +1,8 @@
+{
+  "platformName": "iOS",
+  "deviceName": "iPhone 15",
+  "automationName": "XCUITest",
+  "isHeadless": true,
+  "wdaLaunchTimeout": 180000,
+  "app": "/apps/DailyCheck.zip"
+}

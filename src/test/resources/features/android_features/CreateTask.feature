@@ -22,7 +22,7 @@ Feature: Task Management
       | Relative's Birthday     | Tomorrow   | Tomorrow   | Buy a gift and organize a party              | Work      | None     |
       | Car Maintenance         | Today      | 30/04/2024 | Change oil and check brakes                  | Shopping  | Low      |
       | Dentist                 | Tomorrow   | 30/04/2025 | do not forget credit card                    | Shopping  | Medium   |
-      | Pay rent                | 18/04/2024 | None       | only one month                               | To read   | High     |
+      | Pay rent                | 18/05/2024 | None       | only one month                               | To read   | High     |
       | Pay tv                  | 19/07/2026 | None       | 3rd part                                     | Work      | Low      |
       | Annual Tax Filing       | 20/04/2024 | 22/06/2024 | Gather all financial statements and receipts | Shopping  | High     |
       | Update Office Software  | 25/04/2024 | 20/05/2027 | Ensure backup before update                  | Work      | Medium   |
