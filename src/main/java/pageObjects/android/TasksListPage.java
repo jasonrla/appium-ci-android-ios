@@ -55,8 +55,12 @@ public class TasksListPage extends PageBase {
     }
 
     public void handleRateThisAppAlert() {
-        if(isAlertDisplayed()) {
-            clickNoThanksButton();
+        try {
+            if(isAlertDisplayed()) {
+                clickNoThanksButton();
+            }
+        } catch (Exception e) {
+            System.out.println("Alert not displayed: " + e.getMessage());
         }
     }
 
