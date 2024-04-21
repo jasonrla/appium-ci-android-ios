@@ -2,14 +2,21 @@ package utils;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.json.JSONObject;
-import java.io.FileReader;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Month;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -69,6 +76,66 @@ public class UtilFunctions {
 
     public static String getCurrentDate(String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(new Date());
+    }
+
+    public static String splitStringMonthNumberFromDate(String date) {
+        String[] dateParts = date.split("-");
+        return dateParts[1];
+    }
+
+    public static String splitStringDayNumberFromDate(String date) {
+        String[] dateParts = date.split("-");
+        return dateParts[2];
+    }
+
+    public static String convertStringMonthNumberToMonthName(String monthNumber) {
+        int monthInt = Integer.parseInt(monthNumber);
+        Month month = Month.of(monthInt);
+        return month.name().substring(0, 1) + month.name().substring(1).toLowerCase();
+    }
+
+    public static String convertDay(String day) {
+        int dayInt = Integer.parseInt(day);
+        return String.valueOf(dayInt);
+    }
+
+    public static String getCurrentYear() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        return sdf.format(new Date());
+    }
+
+    public static void swipeLeftUntilElementFound(AppiumDriver driver, WebElement element, String elementToFind) {
+        while (true) {
+            try {
+                if (driver.findElement(By.xpath(elementToFind)).isDisplayed()) {
+                    break;
+                }
+            } catch (NoSuchElementException e) {
+                swipeLeftOnElement(driver, element);
+            }
+        }
+    }
+
+    public static void swipeLeftOnElement(AppiumDriver driver , WebElement element) {
+        Dimension size = element.getSize();
+
+        int startx = element.getLocation().getX() + (size.width);
+        int endx = element.getLocation().getX() - (size.width);
+        int y = element.getLocation().getY();
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence swipe = new Sequence(finger, 1);
+        swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), startx, y));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), endx, y));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+        driver.perform(Arrays.asList(swipe));
+    }
+
+    public static String getCurrentMonthName() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM");
         return sdf.format(new Date());
     }
 }

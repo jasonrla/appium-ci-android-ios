@@ -19,7 +19,7 @@ public class CreateNewTaskPage extends PageBase {
 
     @iOSXCUITFindBy(accessibility = "Save")
     WebElement saveButton;
-
+    //XCUIElementTypeStaticText[@name="29"]
     String dueDateString = "//XCUIElementTypeTextField[@value='%s']";
 
     @iOSXCUITFindBy(iOSNsPredicate = "value == 'Due Time'")
@@ -40,11 +40,15 @@ public class CreateNewTaskPage extends PageBase {
         enterText(titleElement, taskTittle);
     }
 
-    public void enterDueDate() {
-        String currentDate = UtilFunctions.getCurrentDate("yyyy-MM-dd");
-        WebElement dueDateElement = UtilFunctions.createElement(driver, dueDateString, currentDate);
+    public String getCurrentDate() {
+        return UtilFunctions.getCurrentDate("yyyy-MM-dd");
+    }
+
+    public void enterDueDate(String date) {
+        //String currentDate = UtilFunctions.getCurrentDate("yyyy-MM-dd");
+        WebElement dueDateElement = UtilFunctions.createElement(driver, dueDateString, getCurrentDate());
         clear(dueDateElement);
-        sendText(dueDateElement, currentDate);
+        sendText(dueDateElement, date);
     }
 
     public void enterDueTime(String time) {
