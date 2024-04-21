@@ -10,7 +10,7 @@ Feature: Android Task Management
     And chooses "<Tag>" from the tag list
     And selects "<Priority>" as the priority
     And the user clicks on the Save button
-    Then the new task should appear on the correct "<Start Date>" screen
+    Then the new task should appear on the "Today" screen
     And the task should display "<Title>", "<Start Date>", and "<Tag>" (last selected tag)
 
     Examples:
@@ -30,7 +30,7 @@ Scenario Outline: [Android] Creating new Tomorrow's Task
   And chooses "<Tag>" from the tag list
   And selects "<Priority>" as the priority
   And the user clicks on the Save button
-  Then the new task should appear on the correct "<Start Date>" screen
+  Then the new task should appear on the "Tomorrow" screen
   And the task should display "<Title>", "<Start Date>", and "<Tag>" (last selected tag)
 
   Examples:
@@ -50,7 +50,7 @@ Scenario Outline: [Android] Creating new Tomorrow's Task
     And chooses "<Tag>" from the tag list
     And selects "<Priority>" as the priority
     And the user clicks on the Save button
-    Then the new task should appear on the correct "<Start Date>" screen
+    Then the new task should appear on the "Scheduled" screen
     And the task should display "<Title>", "<Start Date>", and "<Tag>" (last selected tag)
 
     Examples:

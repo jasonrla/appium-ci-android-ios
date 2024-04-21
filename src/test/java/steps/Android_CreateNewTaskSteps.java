@@ -118,21 +118,24 @@ public class Android_CreateNewTaskSteps extends TestBase {
         createNewTaskPage.clickOnOKButton();
     }
 
-
-
-    @Then("the new task should appear on the correct {string} screen")
-    public void theNewTaskShouldAppearOnTheCorrectScreen(String startDate) {
-        if(startDate.equals("Today")){
-            Assert.assertEquals(tasksListPage.getToolbarTitle(), startDate);
-            Assert.assertTrue(tasksListPage.isFirstItemDisplayed());
-        } else if (startDate.equals("Tomorrow")){
-            tasksListPage.clickOnNavDrawerButton();
-            tasksListPage.clickOnNavOption(startDate);
-            Assert.assertTrue(tasksListPage.isFirstItemDisplayed());
-        } else {
-            tasksListPage.clickOnNavDrawerButton();
-            tasksListPage.clickOnNavOption("Scheduled");
-            Assert.assertTrue(tasksListPage.isFirstItemDisplayed());
+    @Then("the new task should appear on the {string} screen")
+    public void theNewTaskShouldAppearOnTheScreen(String screen) {
+        switch (screen) {
+            case "Today":
+                Assert.assertEquals(tasksListPage.getToolbarTitle(), screen);
+                Assert.assertTrue(tasksListPage.isFirstItemDisplayed());
+                break;
+            case "Tomorrow":
+                tasksListPage.clickOnNavDrawerButton();
+                tasksListPage.clickOnNavOption(screen);
+                Assert.assertTrue(tasksListPage.isFirstItemDisplayed());
+                break;
+            case "Scheduled": {
+                tasksListPage.clickOnNavDrawerButton();
+                tasksListPage.clickOnNavOption(screen);
+                Assert.assertTrue(tasksListPage.isFirstItemDisplayed());
+            }
+            break;
         }
     }
 
@@ -151,5 +154,6 @@ public class Android_CreateNewTaskSteps extends TestBase {
         Assert.assertEquals(tasksListPage.getToolbarTitle(), toolbarText);
         System.out.printf("The user is on the %s screen\n", toolbarText);
     }
+
 
 }
