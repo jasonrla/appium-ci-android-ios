@@ -1,6 +1,6 @@
-Feature: Task Management
+Feature: IOS Task Management
 
-  Scenario Outline: [IOS] Creating a New Task
+  Scenario Outline: [IOS] Adding new Today’s Task
     Given the user is on the Daily Tasks screen
     When the user clicks the plus button to add a task
     And enters a "<Title>" in the Title field
@@ -15,12 +15,22 @@ Feature: Task Management
       | Passport Renewal 3     | Check necessary documents  2                 |
       | Buy bread              | for family                                   |
       | Annual Medical Checkup | Confirm health insurance details             |
-      | Course Enrollment      | Pay by the 25th for a discount               |
-      | Relatives Birthday     | Buy a gift and organize a party              |
-      | Car Maintenance        | Change oil and check brakes                  |
-      | Dentist                | do not forget credit card                    |
-      | Pay rent               | only one month                               |
-      | Pay tv                 | 3rd part                                     |
-      | Annual Tax Filing      | Gather all financial statements and receipts |
-      | Update Office Software | Ensure backup before update                  |
+
+  Scenario Outline: [IOS] Adding new Scheduled Task
+    Given the user is on the Daily Tasks screen
+    When the user clicks the plus button to add a task
+    And enters a "<Title>" in the Title field
+    And enters a "<DueDate>" in the DueDate field
+    And selects a dueTime
+    And selects "<Description>" as the description field
+    And the user clicks on the Save button
+    Then the new task "<Title>" should not appear on the DailyTasks screen
+    And the new task "<Title>" should appear on the Schedule screen on "<DueDate>"
+
+    Examples:
+      | Title                  | Description                                  |DueDate    |
+      | Course Enrollment      | Pay by the 25th for a discount               |2024-08-15 |
+      | Course Enrollment      | Pay by the 25th for a discount               |2024-04-29 |
+      | Relatives Birthday     | Buy a gift and organize a party              |2024-08-16 |
+      | Car Maintenance        | Change oil and check brakes                  |2024-10-20 |
 
